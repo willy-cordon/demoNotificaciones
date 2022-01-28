@@ -5,18 +5,18 @@ namespace App\Jobs;
 use App\Mail\TestMail;
 use Illuminate\Bus\Dispatcher;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 
-class SendEmail implements ShouldQueue
+class SendEmail extends Job
 {
-    use InteractsWithQueue, Queueable, SerializesModels;
+//    use InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $content;
-    protected $sendTo;
+    private $content;
+    private $sendTo;
     /**
      * Create a new job instance.
      *
@@ -25,6 +25,8 @@ class SendEmail implements ShouldQueue
     public function __construct($content,$sendTo)
     {
         //
+        Log::debug('handle send mail2');
+
         $this->content = $content;
         $this->sendTo = $sendTo;
 
@@ -37,7 +39,12 @@ class SendEmail implements ShouldQueue
      */
     public function handle()
     {
+
+        Log::debug('handle send mail');
+        Log::debug($this->sendTo);
+        Log::debug($this->content);
         //
+//        Mail::to($sendto)->send(new TestMail($content));
         $email = new TestMail($this->content);
         Mail::to($this->sendTo)->send($email);
     }
