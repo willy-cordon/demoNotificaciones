@@ -29,7 +29,7 @@ class Controller extends BaseController
              * * Cola de trabajos
              */
 
-//            dispatch(new SendEmail($content,$sendto));
+            dispatch(new SendEmail($content,$sendto));
 
 
             return response()->json(['message'=>'ok'], 200);

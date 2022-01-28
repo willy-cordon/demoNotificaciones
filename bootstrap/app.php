@@ -100,6 +100,7 @@ $app->alias('mailer', Illuminate\Contracts\Mail\MailQueue::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(Illuminate\Mail\MailServiceProvider::class);
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
+$app->register(Getsolaris\LaravelMakeService\LaravelMakeServiceProvider::class);
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes
