@@ -22,14 +22,15 @@ class Controller extends BaseController
     public function EnvioMail(Request $request){
 
         try {
-            $content=$request->input('content');
+            //$content=$request->input('content');
+            $name=$request->input('name');
             $sendto=$request->input('sendto');
            // $content='<h1>prueba enviando el contenido como html desde controller</h1>';
             /**
              * * Cola de trabajos
              */
 
-            dispatch(new SendEmail($content,$sendto));
+            dispatch(new SendEmail($name,$sendto));
 
 
             return response()->json(['message'=>'ok'], 200);

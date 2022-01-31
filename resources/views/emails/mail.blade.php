@@ -1,1 +1,1 @@
-{!! $content !!}
+<p>Notificaciones de ejemplo para: {!! $name !!}.</p>

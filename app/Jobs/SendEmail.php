@@ -15,19 +15,21 @@ class SendEmail extends Job
 {
 //    use InteractsWithQueue, Queueable, SerializesModels;
 
-    private $content;
+    //private $content;
+    private $name;
     private $sendTo;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($content,$sendTo)
+    public function __construct($name,$sendTo)
     {
         //
         Log::debug('handle send mail2');
 
-        $this->content = $content;
+        //$this->content = $content;
+        $this->name = $name;
         $this->sendTo = $sendTo;
 
     }
@@ -42,10 +44,11 @@ class SendEmail extends Job
 
         Log::debug('handle send mail');
         Log::debug($this->sendTo);
-        Log::debug($this->content);
+        //Log::debug($this->content);
         //
 //        Mail::to($sendto)->send(new TestMail($content));
-        $email = new TestMail($this->content);
+        //$email = new TestMail($this->content);
+        $email = new TestMail($this->name);
         Mail::to($this->sendTo)->send($email);
     }
 
