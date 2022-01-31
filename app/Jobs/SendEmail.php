@@ -18,12 +18,14 @@ class SendEmail extends Job
     //private $content;
     private $name;
     private $sendTo;
+    private $subject;
+    private $title;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($name,$sendTo)
+    public function __construct($name,$sendTo,$subject,$title)
     {
         //
         Log::debug('handle send mail2');
@@ -31,6 +33,8 @@ class SendEmail extends Job
         //$this->content = $content;
         $this->name = $name;
         $this->sendTo = $sendTo;
+        $this->subject = $subject;
+        $this->title = $title;
 
     }
 
@@ -48,7 +52,7 @@ class SendEmail extends Job
         //
 //        Mail::to($sendto)->send(new TestMail($content));
         //$email = new TestMail($this->content);
-        $email = new TestMail($this->name);
+        $email = new TestMail($this->name,$this->subject,$this->title);
         Mail::to($this->sendTo)->send($email);
     }
 

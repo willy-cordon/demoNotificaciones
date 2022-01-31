@@ -6,6 +6,8 @@
     "type": "project",
     "require": {
         "php": "^7.3|^8.0",
+        "anik/form-request": "^4.3",
+        "bensampo/laravel-enum": "^4.1",
         "flipbox/lumen-generator": "^8.2",
         "getsolaris/laravel-make-service": "^1.0",
         "guzzlehttp/guzzle": "^7.4",

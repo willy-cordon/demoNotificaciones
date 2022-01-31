@@ -13,8 +13,29 @@ use App\Http\Controllers\Controller;
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
+$router->get('/test', function () use ($router) {
+    return response(
+        [
+            [  "title"=>"Notificacion Success",
+
+                "name"=>"Aprobacion de licencia2",
+
+                "email"=>"cordonwilly24@gmail.com",
+
+                "subject"=>"Prueba de notificaciones"],
+            [ "title"=>"Notificacion Success",
+
+                "name"=>"Aprobacion de licencia2",
+
+                "email"=>"cordonwilly24@gmail.com",
+
+                "subject"=>"Prueba de notificaciones"
+            ]
+        ]
+       );
 });
+
 $router->get('/mail','Controller@EnvioMail');
 $router->post('/emailProcessor', 'JobProcessorController@emailProcessor');
+$router->post('/bulkEmailProcessor', 'JobProcessorController@bulkProcessorEmail');
+$router->get('/emailProcessorFailed', 'JobProcessorController@processFailed');

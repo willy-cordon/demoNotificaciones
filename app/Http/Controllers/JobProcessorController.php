@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProcessEmailRequest;
 use App\Services\JobProcessorService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -14,9 +15,8 @@ class JobProcessorController extends Controller
         $this->jobProcessorService = $jobProcessorService;
     }
 
-    public function emailProcessor(Request $request)
+    public function emailProcessor(ProcessEmailRequest $request)
     {
-        Log::debug($request);
         try {
             $this->jobProcessorService->processEmail($request);
             return response($request->name.' - successful process');
@@ -30,10 +30,20 @@ class JobProcessorController extends Controller
     public function bulkProcessorEmail(Request $request)
     {
         try {
-            $this->jobProcessorService->bulkProcessEmail($request);
+            return $this->jobProcessorService->bulkProcessEmail($request);
         }catch (\Throwable $throwable)
         {
             return $throwable;
+        }
+    }
+
+    public function processFailed()
+    {
+        try {
+            $this->jobProcessorService->pushedBackQueue();
+            return 'ok';
+        }catch (\Throwable $th){
+            return $th;
         }
     }
 }

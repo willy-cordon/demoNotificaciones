@@ -22,24 +22,45 @@ class JobProcessorService extends Service
 
     public function processEmail($request)
     {
-        $content=$request['content'];
+        //Todo: recibir mails de copia (bcc)
+        $title=$request['title'];
+        $name=$request['name'];
         $sendTo=$request['email'];
+        $subject=$request['subject'];
+
         /**
          * * Register Job
          */
-        dispatch(new SendEmail($content,$sendTo));
+        dispatch(new SendEmail($name,$sendTo,$subject,$title));
+
+        $create = $this->model::create([
+            'title'=>$title,
+            'status'=>'processing'
+        ]);
+        $create->data = $request;
+        $create->save();
 
     }
 
     public function bulkProcessEmail($request)
     {
         $convertRequest = collect($request);
-        $convertRequest->each(function($job){
+        $arr = [];
+        $convertRequest->each(function($job) use(&$arr){
+
             /**
              * * Register Job
              */
-            dispatch(new SendEmail($job->content,$job->sendTo));
+            dispatch(new SendEmail($job['name'],$job['email'],$job['subject'],$job['title']));
+            $arr[] = $job['title'] .'- successful process';
+            $create = $this->model::create([
+                'title'=>$job['title'],
+                'status'=>'processing'
+            ]);
+            $create->data = $job;
+            $create->save();
         });
+        return $arr;
     }
 
     public function pushedBackQueue():void
