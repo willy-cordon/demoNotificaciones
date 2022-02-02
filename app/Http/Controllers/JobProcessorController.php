@@ -27,7 +27,7 @@ class JobProcessorController extends Controller
         }
     }
 
-    public function bulkProcessorEmail(Request $request)
+    public function bulkProcessorEmail(ProcessEmailRequest $request)
     {
         try {
             return $this->jobProcessorService->bulkProcessEmail($request);

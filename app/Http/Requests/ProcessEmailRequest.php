@@ -40,7 +40,7 @@ class ProcessEmailRequest extends FormRequest
     {
         return [
             'title'   => 'required',
-            'email'   => 'required',
+            'email' => 'required|email',
             'name'    => 'required',
             'subject' => 'required'
         ];

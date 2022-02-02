@@ -44,6 +44,7 @@ class JobProcessorService extends Service
 
     public function bulkProcessEmail($request)
     {
+
         $convertRequest = collect($request);
         $arr = [];
         $convertRequest->each(function($job) use(&$arr){
