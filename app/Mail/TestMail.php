@@ -37,7 +37,7 @@ class TestMail extends Mailable
      */
     public function build(): TestMail
     {
-
+        //TODO: recibe html
         return $this->subject($this->subject)
                     ->view('emails.mail')
                     ->with([

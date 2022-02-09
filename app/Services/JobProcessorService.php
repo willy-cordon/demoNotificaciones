@@ -28,6 +28,9 @@ class JobProcessorService extends Service
         $sendTo=$request['email'];
         $subject=$request['subject'];
 
+
+
+
         /**
          * * Register Job
          */
@@ -53,7 +56,7 @@ class JobProcessorService extends Service
              * * Register Job
              */
             dispatch(new SendEmail($job['name'],$job['email'],$job['subject'],$job['title']));
-            $arr[] = $job['title'] .'- successful process';
+            $arr[$job['title']][] ='successful process';
             $create = $this->model::create([
                 'title'=>$job['title'],
                 'status'=>'processing'
