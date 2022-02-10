@@ -18,7 +18,7 @@ class SendEmail extends Job
 //    use InteractsWithQueue, Queueable, SerializesModels;
 
     //private $content;
-    private $name;
+    private $bodyEmail;
     private $sendTo;
     private $subject;
     private $title;
@@ -27,10 +27,10 @@ class SendEmail extends Job
      *
      * @return void
      */
-    public function __construct($name,$sendTo,$subject,$title)
+    public function __construct($bodyEmail,$sendTo,$subject,$title)
     {
 
-        $this->name = $name;
+        $this->bodyEmail = $bodyEmail;
         $this->sendTo = $sendTo;
         $this->subject = $subject;
         $this->title = $title;
@@ -46,9 +46,9 @@ class SendEmail extends Job
     {
 
 
-        $email = new TestMail($this->name,$this->subject,$this->title);
+        $email = new TestMail($this->bodyEmail,$this->subject,$this->title);
         Mail::to($this->sendTo)->send($email);
-        
+
     }
 
 

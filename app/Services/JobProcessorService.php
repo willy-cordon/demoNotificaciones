@@ -51,11 +51,11 @@ class JobProcessorService extends Service
         $convertRequest = collect($request);
         $arr = [];
         $convertRequest->each(function($job) use(&$arr){
-
+        Log::debug($job);
             /**
              * * Register Job
              */
-            dispatch(new SendEmail($job['name'],$job['email'],$job['subject'],$job['title']));
+            dispatch(new SendEmail($job['bodyEmail'],$job['email'],$job['subject'],$job['title']));
             $arr[$job['title']][] ='successful process';
             $create = $this->model::create([
                 'title'=>$job['title'],

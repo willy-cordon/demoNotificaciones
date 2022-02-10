@@ -5,11 +5,11 @@
 </head>
 <body>
 
-<h1>{!! $title !!}</h1>
+<h1>Prueba html</h1>
 
-<h2>{!! $subject!!}</h2>
+<h2>asdasd</h2>
 
-<p>Notificaciones de ejemplo para: {!! $name !!}.</p>
+<p>Notificaciones de ejemplo para: test.</p>
 
 <p>----------------</p>
 <p>No responda a este mensaje ya que el remitente es una casilla automática</p>
