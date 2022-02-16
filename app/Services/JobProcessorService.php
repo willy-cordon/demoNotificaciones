@@ -4,8 +4,10 @@ namespace App\Services;
 
 use App\Jobs\SendEmail;
 use App\Models\JobProcessor;
+use App\Models\User;
 use App\Services\AbstractServices\Service;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -51,7 +53,7 @@ class JobProcessorService extends Service
         $convertRequest = collect($request);
         $arr = [];
         $convertRequest->each(function($job) use(&$arr){
-        Log::debug($job);
+
             /**
              * * Register Job
              */
@@ -62,6 +64,7 @@ class JobProcessorService extends Service
                 'status'=>'processing'
             ]);
             $create->data = $job;
+            $create->user()->associate(User::find(Auth::id()));
             $create->save();
         });
         return $arr;

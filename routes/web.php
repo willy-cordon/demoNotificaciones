@@ -13,29 +13,18 @@ use App\Http\Controllers\Controller;
 |
 */
 
-$router->get('/test', function () use ($router) {
-    return response(
-        [
-            [  "title"=>"Notificacion Success",
+$router->group(['middleware' => 'auth:api'], function($app)
+{
+    $app->get('/auth', function() {
+        return \Illuminate\Support\Facades\Auth::user();
+    });
+    $app->get('/mail','Controller@EnvioMail');
+    $app->post('/emailProcessor', 'JobProcessorController@emailProcessor');
+    $app->post('/bulkEmailProcessor', 'JobProcessorController@bulkProcessorEmail');
+    $app->get('/emailProcessorFailed', 'JobProcessorController@processFailed');
 
-                "name"=>"Aprobacion de licencia2",
-
-                "email"=>"cordonwilly24@gmail.com",
-
-                "subject"=>"Prueba de notificaciones"],
-            [ "title"=>"Notificacion Success",
-
-                "name"=>"Aprobacion de licencia2",
-
-                "email"=>"cordonwilly24@gmail.com",
-
-                "subject"=>"Prueba de notificaciones"
-            ]
-        ]
-       );
 });
 
-$router->get('/mail','Controller@EnvioMail');
-$router->post('/emailProcessor', 'JobProcessorController@emailProcessor');
-$router->post('/bulkEmailProcessor', 'JobProcessorController@bulkProcessorEmail');
-$router->get('/emailProcessorFailed', 'JobProcessorController@processFailed');
+
+$router->post('/login','AuthController@postLogin');
+

@@ -18,6 +18,8 @@ class CreateJobProcessorsTable extends Migration
             $table->string('title')->nullable();
             $table->string('status')->nullable();
             $table->json('data')->nullable();
+            $table->bigInteger('user_id')->unsigned()->index();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

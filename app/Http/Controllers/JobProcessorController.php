@@ -29,6 +29,7 @@ class JobProcessorController extends Controller
 
     public function bulkProcessorEmail(Request $request)
     {
+        Log::debug($request);
         try {
             return $this->jobProcessorService->bulkProcessEmail($request);
         }catch (\Throwable $throwable)
