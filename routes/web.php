@@ -15,6 +15,9 @@ use App\Http\Controllers\Controller;
 
 $router->group(['middleware' => 'auth:api'], function($app)
 {
+    /**
+     * * return data user session
+     */
     $app->get('/auth', function() {
         return \Illuminate\Support\Facades\Auth::user();
     });

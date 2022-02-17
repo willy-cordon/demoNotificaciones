@@ -47,25 +47,30 @@ class JobProcessorService extends Service
 
     }
 
-    public function bulkProcessEmail($request)
+    public function bulkProcessEmail($request): array
     {
+
 
         $convertRequest = collect($request);
         $arr = [];
         $convertRequest->each(function($job) use(&$arr){
 
-            /**
-             * * Register Job
-             */
-            dispatch(new SendEmail($job['bodyEmail'],$job['email'],$job['subject'],$job['title']));
-            $arr[$job['title']][] ='successful process';
-            $create = $this->model::create([
+            $create = JobProcessor::create([
                 'title'=>$job['title'],
                 'status'=>'processing'
             ]);
             $create->data = $job;
-            $create->user()->associate(User::find(Auth::id()));
-            $create->save();
+            $create->user()->associate(User::find(Auth::id()))->save();
+            /**
+             * * Register Job
+             * ? ->onQueue('priority')
+             * ?  php artisan queue:work --queue=high (para ejecutar las prioridades declaradas)
+             */
+            dispatch(new SendEmail($job['bodyEmail'],$job['email'],$job['subject'],$job['title'],$create->id));
+
+            $arr[$job['title']][] ='successful process';
+
+
         });
         return $arr;
     }

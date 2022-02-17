@@ -15,12 +15,13 @@ class CreateJobProcessorsTable extends Migration
     {
         Schema::create('job_processors', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id')->unsigned()->index()->nullable();
+            $table->string('uuid')->unique()->nullable();
             $table->string('title')->nullable();
             $table->string('status')->nullable();
             $table->json('data')->nullable();
-            $table->bigInteger('user_id')->unsigned()->index();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
